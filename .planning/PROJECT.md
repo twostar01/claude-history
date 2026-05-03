@@ -20,9 +20,8 @@ Any Claude Code session can search past conversations and retrieve relevant cont
 - [ ] MCP server exposes search_conversations(query, project_filter?, include_full_content?) tool
 - [ ] MCP server exposes list_projects() tool
 - [ ] MCP server exposes get_conversation(id) tool returning full content
-- [ ] MCP server binds to localhost only (127.0.0.1), no auth required
-- [ ] Claude Code MCP config registers server so it's available in every session
-- [ ] Windows 11 Task Scheduler entry auto-starts MCP server on boot
+- [ ] Claude Code MCP config registers server (stdio transport, user scope) so it's available in every session
+- [ ] MCP server exposes get_stats() tool returning conversation/message counts
 - [ ] Ingest script is run manually after each Claude.ai export download
 
 ### Out of Scope
@@ -36,17 +35,17 @@ Any Claude Code session can search past conversations and retrieve relevant cont
 ## Context
 
 - **Export format**: Claude.ai provides a ZIP/JSON export from account settings. Exact schema TBD — user will provide the export file when ready to test the ingest script. First step is reverse-engineering the schema.
-- **Platform**: Windows 11, Python 3.11+, Claude Code CLI
+- **Platform**: Windows 11, Python 3.11+, Claude Code CLI, uv package manager
 - **Target repo**: github.com/twostar01/claude-history
-- **Runtime**: MCP server runs as a persistent local process, started by Task Scheduler on boot
-- **Interface**: Python mcp SDK (official Anthropic MCP Python library)
+- **Runtime**: stdio transport — Claude Code spawns the server process on demand per session; no persistent daemon or Task Scheduler needed
+- **Interface**: FastMCP from `mcp[cli]` package (official Anthropic MCP Python SDK)
 - **Scale**: Potentially years of conversations — SQLite FTS5 handles this well up to millions of rows
 
 ## Constraints
 
-- **Tech stack**: Python 3.11+, SQLite with FTS5, mcp Python SDK — no deviations
-- **Platform**: Windows 11 (Task Scheduler for auto-start, not systemd/launchd)
-- **Security**: Localhost-only binding, no authentication token needed
+- **Tech stack**: Python 3.11+, uv, FastMCP (`mcp[cli]`), SQLite FTS5 (stdlib) — no deviations
+- **Platform**: Windows 11; stdio transport means no Task Scheduler or persistent daemon needed
+- **Security**: stdio transport inherits Claude Code's process isolation; no network binding required
 - **Search UX**: search_conversations returns snippets + metadata by default; full content available via include_full_content=true flag or get_conversation(id)
 
 ## Key Decisions
@@ -57,7 +56,9 @@ Any Claude Code session can search past conversations and retrieve relevant cont
 | Manual ingest only | Claude.ai export requires manual trigger — no API to automate | ✓ Correct constraint |
 | Snippets-first search results | Avoids flooding LLM context window; full content available on demand | — Pending |
 | Localhost-only, no auth | Personal tool, single machine — auth adds friction with no benefit | — Pending |
-| Python mcp SDK | Official Anthropic library, maintained, best compatibility with Claude Code | — Pending |
+| FastMCP via `mcp[cli]` + uv | Official SDK + recommended package manager per MCP quickstart; auto-generates tool schemas from type hints | — Pending |
+| stdio transport (not HTTP) | Claude Code spawns the server per-session; no persistent process needed; simpler than HTTP daemon | ✓ Confirmed by research |
+| No Task Scheduler | stdio transport makes Task Scheduler irrelevant — this was a pre-research assumption | ✓ Corrected by research |
 
 ## Evolution
 
@@ -77,4 +78,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-03 after initialization*
+*Last updated: 2026-05-03 after research — corrected transport model (stdio, not HTTP daemon)*
