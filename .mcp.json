@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "claude-history": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "--directory",
+        "C:\\Users\\nclem\\Claude Code\\claude-history",
+        "run",
+        "server"
+      ],
+      "env": {}
+    }
+  }
+}
