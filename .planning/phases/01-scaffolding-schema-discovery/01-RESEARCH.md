@@ -594,22 +594,16 @@ Note: `uv.lock` is often committed for reproducible installs. For a personal too
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Does `uv init --package .` work in a non-empty directory?**
-   - What we know: `uv init` creates files; existing files may conflict
-   - What's unclear: Will uv overwrite CLAUDE.md or fail if pyproject.toml doesn't exist yet?
-   - Recommendation: Run `uv init --package . --no-readme` to skip README generation. If it refuses, create pyproject.toml manually using the template from Pattern 2.
+   - RESOLVED: Plan 01-01 Task 1 uses `uv init --package . --no-readme` to skip README generation; fallback to manual pyproject.toml creation if uv refuses non-empty directory.
 
 2. **Should `design_chats` be included in schema_discovery.py output?**
-   - What we know: design_chats have a different message schema than conversations.json
-   - What's unclear: Whether they're in scope for Phase 2 ingest
-   - Recommendation: schema_discovery.py should document ALL file types in the ZIP including design_chats. Phase 2 planning can decide whether to ingest them. SCHEMA.md should flag that they exist and differ structurally.
+   - RESOLVED: schema_discovery.py documents ALL file types including design_chats. Phase 2 planning decides on ingest scope. SCHEMA.md flags structural differences.
 
 3. **How does project association work for conversations?**
-   - What we know: conversations.json has no `project` field; projects/UUID.json exists but has no conversation list
-   - What's unclear: Is there a join mechanism we missed? Or are non-project conversations simply unassociated?
-   - Recommendation: schema_discovery.py should check all project files for any reference to conversation UUIDs. Document the gap in SCHEMA.md. Phase 2 planning addresses this.
+   - RESOLVED: Plan 01-03 documents the gap explicitly in SCHEMA.md under "Project Association Gap". Phase 2 will decide the association strategy.
 
 ---
 
