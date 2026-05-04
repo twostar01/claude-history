@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Completed 01-01-PLAN.md: uv scaffold + gitignore + config.py"
-last_updated: "2026-05-04T13:53:23.851Z"
+stopped_at: "Checkpoint 01-02 Task 3: smoke test — awaiting human verify in new Claude Code session"
+last_updated: "2026-05-04T13:56:30Z"
 last_activity: 2026-05-04
 progress:
   total_phases: 4
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-05-03)
 ## Current Position
 
 Phase: 1 of 4 (Scaffolding + Schema Discovery)
-Plan: 1 of 3 in current phase
-Status: Ready to execute
+Plan: 2 of 3 in current phase (at checkpoint — Tasks 1+2 done, Task 3 awaiting human verify)
+Status: Checkpoint — awaiting human smoke test
 Last activity: 2026-05-04
 
 Progress: [░░░░░░░░░░] 0%
@@ -68,6 +68,9 @@ Recent decisions affecting current work:
 - [Phase ?]: uv 0.11.8 installed system-wide; PATH must include ~/.local/bin in bash sessions
 - [Phase ?]: mcp 1.27.0 installed via mcp[cli]>=1.2.0; FastMCP available at mcp.server.fastmcp.FastMCP
 - [Phase ?]: DB_PATH = Path(__file__).parent.parent.parent / history.db resolves to C:\Users\nclem\Claude Code\claude-history\history.db
+- [01-02]: logging order is non-negotiable: reconfigure(stderr) → basicConfig(stderr) → FastMCP() → tools → mcp.run()
+- [01-02]: claude mcp add writes "type": "stdio" and "env": {} fields in addition to plan-expected keys — both are valid
+- [01-02]: .mcp.json committed to version control (invocation config only, no secrets)
 
 ### Pending Todos
 
@@ -89,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-04T13:53:23.839Z
-Stopped at: Completed 01-01-PLAN.md: uv scaffold + gitignore + config.py
-Resume file: None
+Last session: 2026-05-04T13:56:30Z
+Stopped at: Checkpoint 01-02 Task 3 — human-verify smoke test (call get_status in new Claude Code session)
+Resume file: .planning/phases/01-scaffolding-schema-discovery/01-02-PLAN.md
