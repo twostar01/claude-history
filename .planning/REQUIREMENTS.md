@@ -31,10 +31,10 @@
 
 ### Server & Integration
 
-- [ ] **SETUP-01**: Project is structured as a uv package with `pyproject.toml`, entry points for `server` and `ingest` commands
+- [x] **SETUP-01**: Project is structured as a uv package with `pyproject.toml`, entry points for `server` and `ingest` commands
 - [ ] **SETUP-02**: Server uses FastMCP with stdio transport; all logging goes to stderr; stdout is never written to directly
 - [ ] **SETUP-03**: MCP server is registered with Claude Code via `claude mcp add --scope user --transport stdio` so it is available in every session
-- [ ] **SETUP-04**: `.gitignore` excludes the SQLite database file and any Claude.ai export ZIPs (contain personal conversation history)
+- [x] **SETUP-04**: `.gitignore` excludes the SQLite database file and any Claude.ai export ZIPs (contain personal conversation history)
 - [ ] **SETUP-05**: README documents installation steps, ingest workflow, and Claude Code registration command
 
 ## v2 Requirements
@@ -83,10 +83,10 @@
 | TOOL-04 | Phase 3 | Pending |
 | TOOL-05 | Phase 3 | Pending |
 | TOOL-06 | Phase 3 | Pending |
-| SETUP-01 | Phase 1 | Pending |
+| SETUP-01 | Phase 1 | Complete |
 | SETUP-02 | Phase 3 | Pending |
 | SETUP-03 | Phase 4 | Pending |
-| SETUP-04 | Phase 1 | Pending |
+| SETUP-04 | Phase 1 | Complete |
 | SETUP-05 | Phase 4 | Pending |
 
 **Coverage:**

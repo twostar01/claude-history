@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — uv install, pyproject.toml with build system + entry points, .gitignore, config.py with DB_PATH
+- [x] 01-01-PLAN.md — uv install, pyproject.toml with build system + entry points, .gitignore, config.py with DB_PATH
 - [ ] 01-02-PLAN.md — server.py with stderr-only logging + get_status tool, claude mcp add --scope project, human smoke test
 - [ ] 01-03-PLAN.md — schema_discovery.py inspects real export ZIP, writes .planning/SCHEMA.md with project-association gap warning
 
@@ -88,7 +88,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Scaffolding + Schema Discovery | 0/3 | Not started | - |
+| 1. Scaffolding + Schema Discovery | 1/3 | In Progress|  |
 | 2. Database + Ingest | 0/2 | Not started | - |
 | 3. MCP Tools | 0/2 | Not started | - |
 | 4. Integration + README | 0/1 | Not started | - |
