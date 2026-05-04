@@ -28,12 +28,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Calling a stub tool from Claude Code returns a result and nothing appears on stdout (no contamination)
   3. `uv run schema_discovery.py <export.zip>` prints the top-level keys, message structure, and timestamp format of the real export without modifying any database
   4. The SQLite DB file and export ZIPs are absent from `git status` (gitignored correctly)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Project scaffolding (uv init, pyproject.toml, .gitignore, config.py with DB_PATH)
-- [ ] 01-02: Server stub with stderr logging + MCP registration (server.py, claude mcp add, smoke test)
-- [ ] 01-03: Schema discovery script (schema_discovery.py inspects real export ZIP and prints field map)
+- [ ] 01-01-PLAN.md — uv install, pyproject.toml with build system + entry points, .gitignore, config.py with DB_PATH
+- [ ] 01-02-PLAN.md — server.py with stderr-only logging + get_status tool, claude mcp add --scope project, human smoke test
+- [ ] 01-03-PLAN.md — schema_discovery.py inspects real export ZIP, writes .planning/SCHEMA.md with project-association gap warning
 
 ### Phase 2: Database + Ingest
 **Goal**: A populated SQLite database with a correctly configured FTS5 index that Claude Code can query, built from a real Claude.ai export
