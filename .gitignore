@@ -1,0 +1,17 @@
+# Database files — contain personal conversation history; must never be committed
+*.db
+*.sqlite
+*.sqlite3
+
+# Claude.ai export ZIPs — contain personal conversation history; must never be committed
+*.zip
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+
+# uv artifacts
+.python-version
