@@ -32,8 +32,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md — uv install, pyproject.toml with build system + entry points, .gitignore, config.py with DB_PATH
-- [ ] 01-02-PLAN.md — server.py with stderr-only logging + get_status tool, claude mcp add --scope project, human smoke test
-- [ ] 01-03-PLAN.md — schema_discovery.py inspects real export ZIP, writes .planning/SCHEMA.md with project-association gap warning
+- [x] 01-02-PLAN.md — server.py with stderr-only logging + get_status tool, claude mcp add --scope project, human smoke test
+- [x] 01-03-PLAN.md — schema_discovery.py inspects real export ZIP, writes .planning/SCHEMA.md with project-association gap warning
 
 ### Phase 2: Database + Ingest
 **Goal**: A populated SQLite database with a correctly configured FTS5 index that Claude Code can query, built from a real Claude.ai export
@@ -88,7 +88,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Scaffolding + Schema Discovery | 1/3 | In Progress|  |
+| 1. Scaffolding + Schema Discovery | 3/3 | Complete | 2026-05-04 |
 | 2. Database + Ingest | 0/2 | Not started | - |
 | 3. MCP Tools | 0/2 | Not started | - |
 | 4. Integration + README | 0/1 | Not started | - |

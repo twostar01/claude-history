@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Checkpoint 01-02 Task 3: smoke test — awaiting human verify in new Claude Code session"
-last_updated: "2026-05-04T13:56:30Z"
+stopped_at: "Completed 01-03-PLAN.md — Phase 1 all 3 plans done"
+last_updated: "2026-05-04T14:00:00Z"
 last_activity: 2026-05-04
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
-  percent: 33
+  completed_plans: 3
+  percent: 100
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-05-03)
 ## Current Position
 
 Phase: 1 of 4 (Scaffolding + Schema Discovery)
-Plan: 2 of 3 in current phase (at checkpoint — Tasks 1+2 done, Task 3 awaiting human verify)
-Status: Checkpoint — awaiting human smoke test
+Plan: 3 of 3 in current phase (complete)
+Status: Phase 1 complete — all 3 plans executed
 Last activity: 2026-05-04
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██████████] 100% (Phase 1 of 4 complete)
 
 ## Performance Metrics
 
@@ -71,6 +71,11 @@ Recent decisions affecting current work:
 - [01-02]: logging order is non-negotiable: reconfigure(stderr) → basicConfig(stderr) → FastMCP() → tools → mcp.run()
 - [01-02]: claude mcp add writes "type": "stdio" and "env": {} fields in addition to plan-expected keys — both are valid
 - [01-02]: .mcp.json committed to version control (invocation config only, no secrets)
+- [01-03]: ZIP contains 7 project files (RESEARCH.md noted 6 — export grew by 1 project between research and execution)
+- [01-03]: Primary FTS text field is message["text"] (direct string, always present) — not the content array
+- [01-03]: Project association gap confirmed: conversations.json has NO project field; Phase 2 must decide NULL vs. inference
+- [01-03]: Both timestamp formats confirmed in real data: Z suffix in conversations.json, +00:00 in projects/*.json
+- [01-03]: SCHEMA.md path = Path(__file__).parent.parent.parent / ".planning" / "SCHEMA.md" — schema_discovery.py at src/claude_history/ is 3 levels from project root
 
 ### Pending Todos
 
@@ -78,8 +83,8 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 2 is blocked until the user provides a real Claude.ai export ZIP for schema_discovery.py to inspect
 - FTS5 schema (db.py) must be finalized and tested against sample data before running full ingest
+- Phase 2 decision required: project association strategy (NULL for conversations vs. inference from design_chats)
 
 ## Deferred Items
 
@@ -92,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-04T13:56:30Z
-Stopped at: Checkpoint 01-02 Task 3 — human-verify smoke test (call get_status in new Claude Code session)
-Resume file: .planning/phases/01-scaffolding-schema-discovery/01-02-PLAN.md
+Last session: 2026-05-04T14:00:00Z
+Stopped at: Completed 01-03-PLAN.md — Phase 1 fully complete
+Resume file: .planning/phases/02-database-ingest/02-01-PLAN.md (when Phase 2 is initiated)

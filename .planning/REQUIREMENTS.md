@@ -7,7 +7,7 @@
 
 ### Ingestion
 
-- [ ] **INGEST-01**: User can run a schema discovery script against a Claude.ai export ZIP that prints the JSON field structure without modifying the database
+- [x] **INGEST-01**: User can run a schema discovery script against a Claude.ai export ZIP that prints the JSON field structure without modifying the database
 - [ ] **INGEST-02**: User can run the ingest script against a Claude.ai export ZIP to load all conversations and messages into SQLite
 - [ ] **INGEST-03**: Re-running ingest on the same or updated export does not create duplicate conversations (INSERT OR REPLACE on conversation UUID)
 - [ ] **INGEST-04**: Ingest script skips conversations already in the database when running incrementally (only processes newer conversations)
@@ -68,7 +68,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INGEST-01 | Phase 1 | Pending |
+| INGEST-01 | Phase 1 | Complete |
 | INGEST-02 | Phase 2 | Pending |
 | INGEST-03 | Phase 2 | Pending |
 | INGEST-04 | Phase 2 | Pending |
