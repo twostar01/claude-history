@@ -1,22 +1,21 @@
 """Claude History MCP Server — FastMCP stdio stub (Phase 1)."""
 
 import sys
+sys.stderr.reconfigure(encoding="utf-8")  # must precede all other imports
+
 import logging
 
-# STDOUT CONTAMINATION RULE: sys.stderr.reconfigure() and logging.basicConfig() MUST
-# be the first two statements in main() before ANY other import side effects can
-# write to stdout. The FastMCP stdio transport uses stdout exclusively for JSON-RPC
-# framing. Any write to stdout silently corrupts the session.
+# STDOUT CONTAMINATION RULE: logging.basicConfig() MUST be called before any
+# FastMCP instantiation. The FastMCP stdio transport uses stdout exclusively for
+# JSON-RPC framing. Any write to stdout silently corrupts the session.
 
 from mcp.server.fastmcp import FastMCP
 
 
 def main() -> None:
     """Entry point for `uv run server`."""
-    # Step 1: Fix Windows console encoding (must be before basicConfig)
-    sys.stderr.reconfigure(encoding="utf-8")
 
-    # Step 2: Route ALL logging to stderr (must be before FastMCP() instantiation)
+    # Step 1: Route ALL logging to stderr (must be before FastMCP() instantiation)
     logging.basicConfig(
         stream=sys.stderr,
         level=logging.INFO,
@@ -26,7 +25,7 @@ def main() -> None:
     log = logging.getLogger(__name__)
     log.info("claude-history MCP server starting")
 
-    # Step 3: Create FastMCP instance AFTER logging is configured
+    # Step 2: Create FastMCP instance AFTER logging is configured
     mcp = FastMCP("claude-history")
 
     @mcp.tool()
@@ -34,7 +33,7 @@ def main() -> None:
         """Return server health status. Smoke test target for Phase 1."""
         return {"status": "ok"}
 
-    # Step 4: Start the MCP stdio loop (blocks until client disconnects)
+    # Step 3: Start the MCP stdio loop (blocks until client disconnects)
     mcp.run(transport="stdio")
 
 
