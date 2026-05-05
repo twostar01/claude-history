@@ -118,7 +118,7 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
 
         # INSERT OR IGNORE: if a race condition inserted this UUID between the
         # SELECT above and here, the IGNORE prevents a duplicate. rowcount==0
-        # would indicate the ignore fired (treated as skip in practice).
+        # when the IGNORE fires — count it as skipped rather than new.
         cur.execute(
             """INSERT OR IGNORE INTO conversations
                (id, title, project, created_at, updated_at, message_count)
@@ -131,7 +131,10 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                 len(msgs),
             ),
         )
-        new_convs += 1
+        if cur.rowcount:
+            new_convs += 1
+        else:
+            skipped_convs += 1  # race-condition duplicate
 
         for position, msg in enumerate(msgs):
             msg_uuid = msg.get("uuid")
