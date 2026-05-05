@@ -224,8 +224,6 @@ or (b) attempt to infer project association from design_chats. Document the chos
     schema_path = Path(__file__).parent.parent.parent / ".planning" / "SCHEMA.md"
     schema_path.write_text(schema_content, encoding="utf-8")
 
-    # D-03: also print to console (this is a CLI tool, NOT the MCP server)
-    print(schema_content)
     print(f"\nSchema written to: {schema_path}", file=sys.stderr)
 
 
