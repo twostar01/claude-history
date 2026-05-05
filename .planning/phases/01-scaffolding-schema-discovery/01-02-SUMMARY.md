@@ -55,14 +55,14 @@ completed: 2026-05-04
 
 # Phase 1 Plan 02: FastMCP Server Stub + MCP Registration Summary
 
-**FastMCP stdio server stub with stderr-only logging registered via .mcp.json at project scope — claude mcp list confirms Connected, smoke test pending human verification**
+**FastMCP stdio server stub with stderr-only logging registered via .mcp.json at project scope — claude mcp list confirms Connected, smoke test passed: get_status returned {"status": "ok"} in a new Claude Code session**
 
 ## Performance
 
 - **Duration:** ~3 min
 - **Started:** 2026-05-04T13:53:23Z
 - **Completed:** 2026-05-04T13:55:57Z
-- **Tasks:** 2 of 3 complete (Task 3 is human checkpoint — pending)
+- **Tasks:** 3 of 3 complete (Task 3 human checkpoint resolved — smoke test passed)
 - **Files modified:** 2
 
 ## Accomplishments
@@ -78,9 +78,9 @@ Each task was committed atomically:
 
 1. **Task 1: Create server.py with stderr-only logging and get_status tool** - `88fe43c` (feat)
 2. **Task 2: Register server with Claude Code at project scope** - `73ec2b8` (chore)
-3. **Task 3: Smoke test** - PENDING (human-verify checkpoint)
+3. **Task 3: Smoke test** - RESOLVED (human-verify checkpoint passed)
 
-**Plan metadata:** (committed after checkpoint resolution)
+**Plan metadata:** Committed after checkpoint resolution (6f5bc73 = checkpoint commit, smoke test result recorded here)
 
 ## Files Created/Modified
 
@@ -103,22 +103,20 @@ None.
 
 ## Checkpoint Status
 
-**Task 3 (Smoke test) is a blocking human-verify checkpoint.**
+**Task 3 (Smoke test) RESOLVED — APPROVED.**
 
-What was built is ready for testing:
-- server.py is written and entry point is registered
-- `claude mcp list` confirms the server Connected status in this session
-- A NEW Claude Code session is required to trigger the .mcp.json approval prompt and load the server
+Smoke test result (user-confirmed):
+- Opened a new Claude Code session in the project directory
+- Called `get_status` on the claude-history MCP server
+- Result: `{"status": "ok"}` returned successfully
+- No MCP errors, no session drops — stdio transport confirmed clean
+- stdout contamination prevention (stderr-only logging setup) verified working end-to-end
 
-The human smoke test procedure (from the plan):
-1. Start a NEW Claude Code session in this project directory
-2. Accept the project-scope server approval prompt when it appears
-3. Ask Claude: "Please call the get_status tool on the claude-history MCP server."
-4. Expected result: `{"status": "ok"}` with no MCP errors
+The approval prompt behavior: user accepted the project-scope server registration prompt on new session load (expected behavior per Pitfall 6 in RESEARCH.md).
 
 ## User Setup Required
 
-**Human verification required.** Open a new Claude Code session in this project directory and call the `get_status` tool to confirm the MCP transport is clean (no stdout contamination).
+None — smoke test complete. The stdio transport is confirmed clean.
 
 ## Next Phase Readiness
 
@@ -127,7 +125,7 @@ The human smoke test procedure (from the plan):
 
 ---
 *Phase: 01-scaffolding-schema-discovery*
-*Completed: 2026-05-04 (partial — Task 3 checkpoint pending)*
+*Completed: 2026-05-04*
 
 ## Self-Check: PASSED
 
