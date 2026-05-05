@@ -62,7 +62,11 @@ def normalize_ts(ts: str) -> str:
     """
     if not ts:
         return ""
-    return datetime.fromisoformat(ts).isoformat()
+    try:
+        return datetime.fromisoformat(ts).isoformat()
+    except ValueError:
+        log.warning("Unrecognized timestamp format, storing raw: %r", ts)
+        return ts
 
 
 def ingest_zip(zip_path: Path, db_path: Path) -> None:
