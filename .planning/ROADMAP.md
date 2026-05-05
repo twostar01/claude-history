@@ -45,11 +45,11 @@ Plans:
   3. Re-running ingest on an updated ZIP only processes new conversations (incremental behavior confirmed by log output)
   4. An FTS5 search query in `sqlite3 history.db` returns ranked results with snippets, and snake_case terms like `search_conversations` match as a single token
   5. Text attachment content (e.g., a `.py` or `.md` file) is present in the FTS index; a binary file attachment is skipped without error
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 02-01: db.py — schema definition (conversations, messages, FTS5 virtual table with unicode61 tokenchars '-_' remove_diacritics 2, WAL mode, BEFORE DELETE / AFTER INSERT triggers)
-- [ ] 02-02: ingest.py — ZIP parsing, field extraction using discovered schema, upsert with dedup, incremental skip, text attachment indexing
+- [ ] 02-01-PLAN.md — db.py: init_db() with conversations + messages tables, FTS5 virtual table (unicode61 tokenchars '-_' remove_diacritics 2), WAL mode, AFTER INSERT / AFTER DELETE / AFTER UPDATE triggers
+- [ ] 02-02-PLAN.md — ingest.py: ZIP parsing, field extraction (SCHEMA.md field names), INSERT OR IGNORE upsert, incremental skip, attachment extracted_content indexing; uncomment pyproject.toml ingest entry point
 
 ### Phase 3: MCP Tools
 **Goal**: All six MCP tools return correct, well-shaped results and Claude Code can use them against real indexed data
