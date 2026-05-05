@@ -100,7 +100,11 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
     log.info("%d conversations found in ZIP", len(conversations))
 
     for conv in conversations:
-        uuid = conv["uuid"]
+        uuid = conv.get("uuid")
+        if not uuid:
+            log.warning("Skipping conversation with missing uuid: %r", conv.get("name"))
+            skipped_convs += 1
+            continue
 
         # Incremental skip: if conversation already indexed, skip all its messages.
         # UUID uniqueness is guaranteed by the Claude.ai export format.
@@ -130,6 +134,11 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
         new_convs += 1
 
         for position, msg in enumerate(msgs):
+            msg_uuid = msg.get("uuid")
+            if not msg_uuid:
+                log.warning("Skipping message at position %d with missing uuid", position)
+                continue
+
             content_text = build_message_content(msg)
             has_attachment = bool(
                 any(att.get("extracted_content") for att in msg.get("attachments", []))
@@ -140,7 +149,7 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                    (id, conversation_id, role, content, position, created_at)
                    VALUES (?, ?, ?, ?, ?, ?)""",
                 (
-                    msg["uuid"],
+                    msg_uuid,
                     uuid,
                     msg.get("sender", ""),
                     content_text,
