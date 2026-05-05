@@ -602,7 +602,7 @@ def export_conversation(id: str) -> str:
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **get_status() scope (Claude's Discretion)**
    - What we know: Current stub returns `{"status": "ok"}`. DB stats queries are trivial and already written for get_stats().
