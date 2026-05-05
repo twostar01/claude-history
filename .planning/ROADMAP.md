@@ -66,7 +66,7 @@ Plans:
 
 Plans:
 - [x] 03-01-PLAN.md — search.py: FTS5 query building, two-step Python BM25 aggregation (one result per conversation), snippet shaping (token_count=64), FTS5 sanitization fallback (D-05), include_full_content mode *(completed 2026-05-05)*
-- [ ] 03-02-PLAN.md — server.py: implement all 6 tool handlers (search_conversations, get_conversation, list_projects, get_stats, export_conversation, get_status); human smoke test validates no stdout contamination and correct tool shapes
+- [x] 03-02-PLAN.md — server.py: implement all 6 tool handlers (search_conversations, get_conversation, list_projects, get_stats, export_conversation, get_status); human smoke test validates no stdout contamination and correct tool shapes *(implemented 2026-05-05; checkpoint pending)*
 
 ### Phase 4: Integration + README
 **Goal**: The server is registered with Claude Code for every session and a developer can install and use it from scratch using only the README
@@ -90,5 +90,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Scaffolding + Schema Discovery | 3/3 | Complete | 2026-05-04 |
 | 2. Database + Ingest | 2/2 | Complete | 2026-05-05 |
-| 3. MCP Tools | 1/2 | In Progress | - |
+| 3. MCP Tools | 2/2 | Complete (checkpoint pending) | 2026-05-05 |
 | 4. Integration + README | 0/1 | Not started | - |
