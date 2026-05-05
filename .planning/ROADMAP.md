@@ -62,11 +62,11 @@ Plans:
   4. `list_projects()` returns project names with conversation counts and date ranges; `get_stats()` returns total counts, date range, and DB file size
   5. `export_conversation(id)` returns a clean markdown string with no raw JSON or formatting artifacts
   6. All tools return graceful empty-list responses (not errors) when given queries or IDs that match nothing
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 03-01: search.py + models.py — FTS5 query building, BM25 ranking, snippet shaping, SearchResult dataclass
-- [ ] 03-02: server.py — implement all 6 tool handlers using db.py + search.py; validate with MCP Inspector
+- [ ] 03-01-PLAN.md — search.py: FTS5 query building, two-step Python BM25 aggregation (one result per conversation), snippet shaping (token_count=64), FTS5 sanitization fallback (D-05), include_full_content mode
+- [ ] 03-02-PLAN.md — server.py: implement all 6 tool handlers (search_conversations, get_conversation, list_projects, get_stats, export_conversation, get_status); human smoke test validates no stdout contamination and correct tool shapes
 
 ### Phase 4: Integration + README
 **Goal**: The server is registered with Claude Code for every session and a developer can install and use it from scratch using only the README
