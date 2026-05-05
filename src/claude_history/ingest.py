@@ -94,6 +94,12 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
     with zipfile.ZipFile(zip_path) as zf:
         # Only conversations.json is processed in Phase 2.
         # projects/, design_chats/, users.json are silently skipped.
+        if "conversations.json" not in zf.namelist():
+            log.error(
+                "conversations.json not found in %s. "
+                "Is this a Claude.ai export ZIP?", zip_path
+            )
+            sys.exit(1)
         with zf.open("conversations.json") as f:
             conversations = json.load(f)
 
