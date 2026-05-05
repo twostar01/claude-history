@@ -8,17 +8,17 @@
 ### Ingestion
 
 - [x] **INGEST-01**: User can run a schema discovery script against a Claude.ai export ZIP that prints the JSON field structure without modifying the database
-- [ ] **INGEST-02**: User can run the ingest script against a Claude.ai export ZIP to load all conversations and messages into SQLite
-- [ ] **INGEST-03**: Re-running ingest on the same or updated export does not create duplicate conversations (INSERT OR REPLACE on conversation UUID)
-- [ ] **INGEST-04**: Ingest script skips conversations already in the database when running incrementally (only processes newer conversations)
-- [ ] **INGEST-05**: Ingest script indexes content of text and code attachments (.txt, .py, .js, .md, etc.) alongside conversation messages; skips binary files gracefully
+- [x] **INGEST-02**: User can run the ingest script against a Claude.ai export ZIP to load all conversations and messages into SQLite
+- [x] **INGEST-03**: Re-running ingest on the same or updated export does not create duplicate conversations (INSERT OR IGNORE + UUID pre-check)
+- [x] **INGEST-04**: Ingest script skips conversations already in the database when running incrementally (only processes newer conversations)
+- [x] **INGEST-05**: Ingest script indexes content of text and code attachments (.txt, .py, .js, .md, etc.) alongside conversation messages; skips binary files gracefully
 
 ### Database
 
-- [ ] **DB-01**: SQLite database uses FTS5 virtual table with trigram tokenizer enabling fuzzy/typo-tolerant search
-- [ ] **DB-02**: FTS5 table uses content table pattern (no duplicate text storage) with BEFORE DELETE / AFTER INSERT triggers to stay in sync
-- [ ] **DB-03**: Database uses WAL journal mode to allow concurrent reads during ingest
-- [ ] **DB-04**: Schema stores conversations (id, title, project, created_at, message_count) and messages (id, conversation_id, role, content, position, created_at)
+- [x] **DB-01**: SQLite database uses FTS5 virtual table with unicode61 tokenizer (`tokenchars '-_'`) enabling snake_case-aware search
+- [x] **DB-02**: FTS5 table uses content table pattern (no duplicate text storage) with AFTER INSERT / AFTER DELETE / AFTER UPDATE triggers to stay in sync
+- [x] **DB-03**: Database uses WAL journal mode to allow concurrent reads during ingest
+- [x] **DB-04**: Schema stores conversations (id, title, project, created_at, message_count) and messages (id, conversation_id, role, content, position, created_at)
 
 ### MCP Tools
 
@@ -69,14 +69,14 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | INGEST-01 | Phase 1 | Complete |
-| INGEST-02 | Phase 2 | Pending |
-| INGEST-03 | Phase 2 | Pending |
-| INGEST-04 | Phase 2 | Pending |
-| INGEST-05 | Phase 2 | Pending |
-| DB-01 | Phase 2 | Pending |
-| DB-02 | Phase 2 | Pending |
-| DB-03 | Phase 2 | Pending |
-| DB-04 | Phase 2 | Pending |
+| INGEST-02 | Phase 2 | Complete |
+| INGEST-03 | Phase 2 | Complete |
+| INGEST-04 | Phase 2 | Complete |
+| INGEST-05 | Phase 2 | Complete |
+| DB-01 | Phase 2 | Complete |
+| DB-02 | Phase 2 | Complete |
+| DB-03 | Phase 2 | Complete |
+| DB-04 | Phase 2 | Complete |
 | TOOL-01 | Phase 3 | Pending |
 | TOOL-02 | Phase 3 | Pending |
 | TOOL-03 | Phase 3 | Pending |
@@ -96,4 +96,4 @@
 
 ---
 *Requirements defined: 2026-05-03*
-*Last updated: 2026-05-03 — traceability populated after roadmap creation*
+*Last updated: 2026-05-05 — Phase 2 requirements marked complete; stale mechanism descriptions corrected (trigram→unicode61, BEFORE→AFTER triggers, INSERT OR REPLACE→INSERT OR IGNORE)*

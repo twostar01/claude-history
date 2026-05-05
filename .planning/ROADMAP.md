@@ -13,7 +13,7 @@ Four phases that move from nothing to a fully registered, searchable MCP server.
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Scaffolding + Schema Discovery** - uv project, stdio server stub, stderr logging, MCP registration working with stub tools, schema_discovery.py prints real export structure *(completed 2026-05-04)*
-- [ ] **Phase 2: Database + Ingest** - FTS5 schema locked, ingest.py parses real export, dedup + incremental, text attachment indexing, WAL mode
+- [x] **Phase 2: Database + Ingest** - FTS5 schema locked, ingest.py parses real export, dedup + incremental, text attachment indexing, WAL mode *(completed 2026-05-05)*
 - [ ] **Phase 3: MCP Tools** - All 6 tools implemented, validated via MCP Inspector, Claude Code can call them against real data
 - [ ] **Phase 4: Integration + README** - End-to-end test with full history, claude mcp add registration confirmed, README complete
 
@@ -49,7 +49,7 @@ Plans:
 
 Plans:
 - [x] 02-01-PLAN.md — db.py: init_db() with conversations + messages tables, FTS5 virtual table (unicode61 tokenchars '-_' remove_diacritics 2), WAL mode, AFTER INSERT / AFTER DELETE / AFTER UPDATE triggers *(completed 2026-05-04)*
-- [ ] 02-02-PLAN.md — ingest.py: ZIP parsing, field extraction (SCHEMA.md field names), INSERT OR IGNORE upsert, incremental skip, attachment extracted_content indexing; uncomment pyproject.toml ingest entry point
+- [x] 02-02-PLAN.md — ingest.py: ZIP parsing, field extraction (SCHEMA.md field names), INSERT OR IGNORE upsert, incremental skip, attachment extracted_content indexing; uncomment pyproject.toml ingest entry point *(completed 2026-05-05)*
 
 ### Phase 3: MCP Tools
 **Goal**: All six MCP tools return correct, well-shaped results and Claude Code can use them against real indexed data
@@ -89,6 +89,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Scaffolding + Schema Discovery | 3/3 | Complete | 2026-05-04 |
-| 2. Database + Ingest | 1/2 | In Progress | - |
+| 2. Database + Ingest | 2/2 | Complete | 2026-05-05 |
 | 3. MCP Tools | 0/2 | Not started | - |
 | 4. Integration + README | 0/1 | Not started | - |

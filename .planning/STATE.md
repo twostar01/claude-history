@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-03)
 
 **Core value:** Any Claude Code session can search past conversations and retrieve relevant context with a single tool call.
-**Current focus:** Phase 1 — Scaffolding + Schema Discovery
+**Current focus:** Phase 3 — MCP Tools
 
 ## Current Position
 
-Phase: 2 of 4 (Database + Ingest)
-Plan: 1 of 2 complete — Wave 2 (ingest.py) in progress
-Status: Phase 2 executing — db.py complete, ingest.py pending
-Last activity: 2026-05-04
+Phase: 2 of 4 (Database + Ingest) — COMPLETE
+Plan: 2 of 2 complete
+Status: Phase 2 complete — history.db populated (106 conversations, 4087 messages, FTS5 ready)
+Last activity: 2026-05-05
 
-Progress: [█████░░░░░] 37.5% (Phase 1 complete + plan 02-01 complete)
+Progress: [█████░░░░░] 50% (Phases 1+2 complete)
 
 ## Performance Metrics
 

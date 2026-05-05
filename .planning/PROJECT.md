@@ -12,11 +12,12 @@ Any Claude Code session can search past conversations and retrieve relevant cont
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Ingest script parses Claude.ai export format into SQLite with FTS5 — **Validated in Phase 2**: 106 conversations, 4087 messages ingested; incremental re-runs skip existing data
+- [x] SQLite FTS5 with unicode61 tokenizer (`tokenchars '-_'`) handles snake_case terms as single tokens — **Validated in Phase 2**
 
 ### Active
 
-- [ ] Ingest script parses Claude.ai export format into SQLite with FTS5
+- [ ] Ingest script parses Claude.ai export format into SQLite with FTS5 (complete — see Validated)
 - [ ] MCP server exposes search_conversations(query, project_filter?, include_full_content?) tool
 - [ ] MCP server exposes list_projects() tool
 - [ ] MCP server exposes get_conversation(id) tool returning full content
@@ -78,4 +79,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-03 after research — corrected transport model (stdio, not HTTP daemon)*
+*Last updated: 2026-05-05 — Phase 2 complete; ingest + FTS5 schema validated against real export*
