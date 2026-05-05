@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready_to_execute
-stopped_at: "Phase 3 planned — 2 plans ready to execute"
+status: executing
+stopped_at: "Phase 3 executing — plan 1 of 2 complete"
 last_updated: "2026-05-05"
 last_activity: 2026-05-05
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 7
-  completed_plans: 5
-  percent: 50
+  completed_plans: 6
+  percent: 57
 ---
 
 # Project State
@@ -25,34 +25,35 @@ See: .planning/PROJECT.md (updated 2026-05-03)
 
 ## Current Position
 
-Phase: 3 of 4 (MCP Tools) — PLANNED, READY TO EXECUTE
-Plan: 0 of 2 complete
-Status: Phase 3 planned — search.py (Wave 1) + server.py full tools (Wave 2); 2 plans ready
+Phase: 3 of 4 (MCP Tools) — EXECUTING
+Plan: 1 of 2 complete
+Status: Phase 3 executing — Plan 03-01 (search.py) complete; Plan 03-02 (server.py tools) next
 Last activity: 2026-05-05
 
-Progress: [█████░░░░░] 50% (Phases 1+2 complete, Phase 3 planned)
+Progress: [██████░░░░] 57% (Phases 1+2 complete, Phase 3 plan 1/2 done)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: —
+- Total plans completed: 1
+- Average duration: 1min
+- Total execution time: 1min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 03-mcp-tools | 1 | 1min | 1min |
 
 **Recent Trend:**
 
-- Last 5 plans: —
-- Trend: —
+- Last 5 plans: 1min
+- Trend: baseline
 
 *Updated after each plan completion*
 | Phase 01-scaffolding-schema-discovery P01 | 3min | 2 tasks | 5 files |
+| Phase 03-mcp-tools P01 | 1min | 1 task | 1 file |
 
 ## Accumulated Context
 
@@ -76,6 +77,9 @@ Recent decisions affecting current work:
 - [01-03]: Project association gap confirmed: conversations.json has NO project field; Phase 2 must decide NULL vs. inference
 - [01-03]: Both timestamp formats confirmed in real data: Z suffix in conversations.json, +00:00 in projects/*.json
 - [01-03]: SCHEMA.md path = Path(__file__).parent.parent.parent / ".planning" / "SCHEMA.md" — schema_discovery.py at src/claude_history/ is 3 levels from project root
+- [03-01]: bm25() cannot appear in GROUP BY subqueries in SQLite FTS5 — Python dict aggregation is the correct per-conversation dedup pattern
+- [03-01]: token_count=64 for snippet() targets ~300 char average (verified in RESEARCH.md on live DB)
+- [03-01]: FTS5 OperationalError fallback: escape embedded quotes with replace('"', '""') before phrase-quoting
 
 ### Pending Todos
 
@@ -83,8 +87,7 @@ None yet.
 
 ### Blockers/Concerns
 
-- FTS5 schema (db.py) must be finalized and tested against sample data before running full ingest
-- Phase 2 decision required: project association strategy (NULL for conversations vs. inference from design_chats)
+None — FTS5 schema finalized in Phase 2, project association (NULL) confirmed. search.py complete. Ready for server.py tool wiring (03-02).
 
 ## Deferred Items
 
@@ -98,5 +101,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-05-05
-Stopped at: Phase 3 planned — 2 plans ready to execute
-Resume file: .planning/phases/03-mcp-tools/03-01-PLAN.md
+Stopped at: Phase 3 plan 03-01 complete — search.py implemented and committed
+Resume file: .planning/phases/03-mcp-tools/03-02-PLAN.md
