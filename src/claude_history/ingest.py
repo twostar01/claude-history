@@ -160,7 +160,8 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                     normalize_ts(msg.get("created_at", "")),
                 ),
             )
-            new_msgs += 1
+            if cur.rowcount:
+                new_msgs += 1
             if has_attachment:
                 attachment_msgs += 1
 
