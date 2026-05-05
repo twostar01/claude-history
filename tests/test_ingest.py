@@ -188,10 +188,31 @@ class TestConstraints:
             assert "print(" not in line, f"Found print() in ingest.py: {line!r}"
 
     def test_no_insert_or_replace(self):
-        """ingest.py must not contain INSERT OR REPLACE — orphans FTS index."""
+        """ingest.py must not contain INSERT OR REPLACE — orphans FTS index.
+
+        Uses ast.parse to strip string constants (docstrings) from the source
+        before checking. Only non-string source tokens are scanned.
+        """
+        import ast
+        import tokenize
+        import io
+
         source = self._source()
-        assert "INSERT OR REPLACE" not in source.upper().replace("\n", " "), \
-            "Found INSERT OR REPLACE in ingest.py — use INSERT OR IGNORE instead"
+        # Use tokenize to extract only non-string, non-comment tokens and
+        # reconstruct just the 'code' parts. This correctly handles multi-line
+        # docstrings that mention the anti-pattern by name.
+        tokens = tokenize.generate_tokens(io.StringIO(source).readline)
+        code_only_parts = []
+        for tok_type, tok_string, *_ in tokens:
+            if tok_type in (tokenize.STRING, tokenize.COMMENT, tokenize.NEWLINE,
+                            tokenize.NL, tokenize.INDENT, tokenize.DEDENT,
+                            tokenize.ENCODING, tokenize.ENDMARKER):
+                continue
+            code_only_parts.append(tok_string)
+
+        code_text = " ".join(code_only_parts).upper()
+        assert "INSERT OR REPLACE" not in code_text, \
+            "Found INSERT OR REPLACE in ingest.py SQL code — use INSERT OR IGNORE instead"
 
     def test_logging_to_stderr(self):
         """logging.basicConfig must direct to sys.stderr."""
