@@ -181,9 +181,8 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
         conn.close()
 
     log.info(
-        "%d new, %d already indexed — skipping %d",
+        "%d new conversations, %d already indexed (skipped)",
         new_convs,
-        skipped_convs,
         skipped_convs,
     )
     log.info(
