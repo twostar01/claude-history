@@ -15,6 +15,15 @@ server = "claude_history.server:main"
 # ingest = "claude_history.ingest:main"  # Phase 2 — module not yet implemented
 schema-discovery = "claude_history.schema_discovery:main"
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
 [build-system]
 requires = ["uv_build>=0.11.8,<0.12.0"]
 build-backend = "uv_build"
