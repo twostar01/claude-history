@@ -84,99 +84,101 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
     from claude_history.db import init_db
 
     conn = init_db(db_path)
-    cur = conn.cursor()
+    try:
+        cur = conn.cursor()
 
-    new_convs = 0
-    skipped_convs = 0
-    new_msgs = 0
-    attachment_msgs = 0
+        new_convs = 0
+        skipped_convs = 0
+        new_msgs = 0
+        attachment_msgs = 0
 
-    with zipfile.ZipFile(zip_path) as zf:
-        # Only conversations.json is processed in Phase 2.
-        # projects/, design_chats/, users.json are silently skipped.
-        if "conversations.json" not in zf.namelist():
-            log.error(
-                "conversations.json not found in %s. "
-                "Is this a Claude.ai export ZIP?", zip_path
-            )
-            sys.exit(1)
-        with zf.open("conversations.json") as f:
-            try:
-                conversations = json.load(f)
-            except json.JSONDecodeError as exc:
-                log.error("conversations.json is not valid JSON: %s", exc)
+        with zipfile.ZipFile(zip_path) as zf:
+            # Only conversations.json is processed in Phase 2.
+            # projects/, design_chats/, users.json are silently skipped.
+            if "conversations.json" not in zf.namelist():
+                log.error(
+                    "conversations.json not found in %s. "
+                    "Is this a Claude.ai export ZIP?", zip_path
+                )
                 sys.exit(1)
+            with zf.open("conversations.json") as f:
+                try:
+                    conversations = json.load(f)
+                except json.JSONDecodeError as exc:
+                    log.error("conversations.json is not valid JSON: %s", exc)
+                    sys.exit(1)
 
-    log.info("%d conversations found in ZIP", len(conversations))
+        log.info("%d conversations found in ZIP", len(conversations))
 
-    for conv in conversations:
-        uuid = conv.get("uuid")
-        if not uuid:
-            log.warning("Skipping conversation with missing uuid: %r", conv.get("name"))
-            skipped_convs += 1
-            continue
-
-        # Incremental skip: if conversation already indexed, skip all its messages.
-        # UUID uniqueness is guaranteed by the Claude.ai export format.
-        cur.execute("SELECT 1 FROM conversations WHERE id = ?", (uuid,))
-        if cur.fetchone():
-            skipped_convs += 1
-            continue
-
-        msgs = conv.get("chat_messages", [])
-        title = conv.get("name") or ""
-
-        # INSERT OR IGNORE: if a race condition inserted this UUID between the
-        # SELECT above and here, the IGNORE prevents a duplicate. rowcount==0
-        # when the IGNORE fires — count it as skipped rather than new.
-        cur.execute(
-            """INSERT OR IGNORE INTO conversations
-               (id, title, project, created_at, updated_at, message_count)
-               VALUES (?, ?, NULL, ?, ?, ?)""",
-            (
-                uuid,
-                title,
-                normalize_ts(conv.get("created_at", "")),
-                normalize_ts(conv.get("updated_at", "")),
-                len(msgs),
-            ),
-        )
-        if cur.rowcount:
-            new_convs += 1
-        else:
-            skipped_convs += 1  # race-condition duplicate
-
-        for position, msg in enumerate(msgs):
-            msg_uuid = msg.get("uuid")
-            if not msg_uuid:
-                log.warning("Skipping message at position %d with missing uuid", position)
+        for conv in conversations:
+            uuid = conv.get("uuid")
+            if not uuid:
+                log.warning("Skipping conversation with missing uuid: %r", conv.get("name"))
+                skipped_convs += 1
                 continue
 
-            content_text = build_message_content(msg)
-            has_attachment = bool(
-                any(att.get("extracted_content") for att in msg.get("attachments", []))
-            )
+            # Incremental skip: if conversation already indexed, skip all its messages.
+            # UUID uniqueness is guaranteed by the Claude.ai export format.
+            cur.execute("SELECT 1 FROM conversations WHERE id = ?", (uuid,))
+            if cur.fetchone():
+                skipped_convs += 1
+                continue
 
+            msgs = conv.get("chat_messages", [])
+            title = conv.get("name") or ""
+
+            # INSERT OR IGNORE: if a race condition inserted this UUID between the
+            # SELECT above and here, the IGNORE prevents a duplicate. rowcount==0
+            # when the IGNORE fires — count it as skipped rather than new.
             cur.execute(
-                """INSERT OR IGNORE INTO messages
-                   (id, conversation_id, role, content, position, created_at)
-                   VALUES (?, ?, ?, ?, ?, ?)""",
+                """INSERT OR IGNORE INTO conversations
+                   (id, title, project, created_at, updated_at, message_count)
+                   VALUES (?, ?, NULL, ?, ?, ?)""",
                 (
-                    msg_uuid,
                     uuid,
-                    msg.get("sender", ""),
-                    content_text,
-                    position,
-                    normalize_ts(msg.get("created_at", "")),
+                    title,
+                    normalize_ts(conv.get("created_at", "")),
+                    normalize_ts(conv.get("updated_at", "")),
+                    len(msgs),
                 ),
             )
             if cur.rowcount:
-                new_msgs += 1
-            if has_attachment:
-                attachment_msgs += 1
+                new_convs += 1
+            else:
+                skipped_convs += 1  # race-condition duplicate
 
-    conn.commit()
-    conn.close()
+            for position, msg in enumerate(msgs):
+                msg_uuid = msg.get("uuid")
+                if not msg_uuid:
+                    log.warning("Skipping message at position %d with missing uuid", position)
+                    continue
+
+                content_text = build_message_content(msg)
+                has_attachment = bool(
+                    any(att.get("extracted_content") for att in msg.get("attachments", []))
+                )
+
+                cur.execute(
+                    """INSERT OR IGNORE INTO messages
+                       (id, conversation_id, role, content, position, created_at)
+                       VALUES (?, ?, ?, ?, ?, ?)""",
+                    (
+                        msg_uuid,
+                        uuid,
+                        msg.get("sender", ""),
+                        content_text,
+                        position,
+                        normalize_ts(msg.get("created_at", "")),
+                    ),
+                )
+                if cur.rowcount:
+                    new_msgs += 1
+                if has_attachment:
+                    attachment_msgs += 1
+
+        conn.commit()
+    finally:
+        conn.close()
 
     log.info(
         "%d new, %d already indexed — skipping %d",
