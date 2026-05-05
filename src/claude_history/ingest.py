@@ -101,7 +101,11 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
             )
             sys.exit(1)
         with zf.open("conversations.json") as f:
-            conversations = json.load(f)
+            try:
+                conversations = json.load(f)
+            except json.JSONDecodeError as exc:
+                log.error("conversations.json is not valid JSON: %s", exc)
+                sys.exit(1)
 
     log.info("%d conversations found in ZIP", len(conversations))
 
