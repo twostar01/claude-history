@@ -12,7 +12,7 @@ Four phases that move from nothing to a fully registered, searchable MCP server.
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Scaffolding + Schema Discovery** - uv project, stdio server stub, stderr logging, MCP registration working with stub tools, schema_discovery.py prints real export structure
+- [x] **Phase 1: Scaffolding + Schema Discovery** - uv project, stdio server stub, stderr logging, MCP registration working with stub tools, schema_discovery.py prints real export structure *(completed 2026-05-04)*
 - [ ] **Phase 2: Database + Ingest** - FTS5 schema locked, ingest.py parses real export, dedup + incremental, text attachment indexing, WAL mode
 - [ ] **Phase 3: MCP Tools** - All 6 tools implemented, validated via MCP Inspector, Claude Code can call them against real data
 - [ ] **Phase 4: Integration + README** - End-to-end test with full history, claude mcp add registration confirmed, README complete
