@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import sys
+import traceback
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
@@ -75,6 +76,7 @@ def main() -> None:
         _run(zip_path)
     except Exception as exc:  # noqa: BLE001
         print(f"Error: {exc}", file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
         sys.exit(1)
 
 
