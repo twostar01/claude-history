@@ -15,3 +15,6 @@ dist/
 
 # uv artifacts
 .python-version
+
+# User-local MCP configuration — machine-specific paths, not portable
+.mcp.json
