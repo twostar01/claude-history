@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-05-03)
 
 ## Current Position
 
-Phase: 1 of 4 (Scaffolding + Schema Discovery)
-Plan: 3 of 3 in current phase (complete)
-Status: Phase 1 complete — all 3 plans executed
+Phase: 2 of 4 (Database + Ingest)
+Plan: 1 of 2 complete — Wave 2 (ingest.py) in progress
+Status: Phase 2 executing — db.py complete, ingest.py pending
 Last activity: 2026-05-04
 
-Progress: [██████████] 100% (Phase 1 of 4 complete)
+Progress: [█████░░░░░] 37.5% (Phase 1 complete + plan 02-01 complete)
 
 ## Performance Metrics
 

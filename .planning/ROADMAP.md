@@ -48,7 +48,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — db.py: init_db() with conversations + messages tables, FTS5 virtual table (unicode61 tokenchars '-_' remove_diacritics 2), WAL mode, AFTER INSERT / AFTER DELETE / AFTER UPDATE triggers
+- [x] 02-01-PLAN.md — db.py: init_db() with conversations + messages tables, FTS5 virtual table (unicode61 tokenchars '-_' remove_diacritics 2), WAL mode, AFTER INSERT / AFTER DELETE / AFTER UPDATE triggers *(completed 2026-05-04)*
 - [ ] 02-02-PLAN.md — ingest.py: ZIP parsing, field extraction (SCHEMA.md field names), INSERT OR IGNORE upsert, incremental skip, attachment extracted_content indexing; uncomment pyproject.toml ingest entry point
 
 ### Phase 3: MCP Tools
@@ -89,6 +89,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Scaffolding + Schema Discovery | 3/3 | Complete | 2026-05-04 |
-| 2. Database + Ingest | 0/2 | Not started | - |
+| 2. Database + Ingest | 1/2 | In Progress | - |
 | 3. MCP Tools | 0/2 | Not started | - |
 | 4. Integration + README | 0/1 | Not started | - |
