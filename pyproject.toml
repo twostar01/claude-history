@@ -12,7 +12,7 @@ dependencies = [
 
 [project.scripts]
 server = "claude_history.server:main"
-ingest = "claude_history.ingest:main"
+# ingest = "claude_history.ingest:main"  # Phase 2 — module not yet implemented
 schema-discovery = "claude_history.schema_discovery:main"
 
 [build-system]
