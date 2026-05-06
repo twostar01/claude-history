@@ -189,7 +189,7 @@ def main() -> None:
             )
             conv = cur.fetchone()
             if conv is None:
-                return f"Conversation {id!r} not found."
+                return f"## Error\n\nConversation {id!r} not found."
 
             # D-07: position ASC
             cur.execute("""
