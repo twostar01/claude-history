@@ -224,17 +224,24 @@ def main() -> None:
 
         Promoted from Phase 1 stub to include conversation count and last
         ingested date for a quick at-a-glance view of the indexed data.
+
+        Returns {"status": "error", "error": "..."} when the database is
+        inaccessible, so callers can detect unhealthy state without receiving
+        an unstructured server error.
         """
-        conn = init_db(DB_PATH)
         try:
-            conn.row_factory = sqlite3.Row
-            cur = conn.cursor()
-            cur.execute("SELECT COUNT(*) AS n FROM conversations")
-            conv_count = cur.fetchone()["n"]
-            cur.execute("SELECT MAX(created_at) AS latest FROM conversations")
-            latest = cur.fetchone()["latest"]
-        finally:
-            conn.close()
+            conn = init_db(DB_PATH)
+            try:
+                conn.row_factory = sqlite3.Row
+                cur = conn.cursor()
+                cur.execute("SELECT COUNT(*) AS n FROM conversations")
+                conv_count = cur.fetchone()["n"]
+                cur.execute("SELECT MAX(created_at) AS latest FROM conversations")
+                latest = cur.fetchone()["latest"]
+            finally:
+                conn.close()
+        except Exception as exc:
+            return {"status": "error", "error": str(exc), "conversations": 0, "last_ingested": None}
 
         return {
             "status": "ok",
