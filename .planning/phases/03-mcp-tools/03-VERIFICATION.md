@@ -1,23 +1,23 @@
 ---
 phase: 03-mcp-tools
 verified: 2026-05-06T00:00:00Z
-status: human_needed
-score: 5/6 must-haves verified
+status: verified
+score: 6/6 must-haves verified
 overrides_applied: 0
 human_verification:
   - test: "Confirm no stdout output when uv run server starts"
     expected: "Server blocks on stdin with zero bytes written to stdout"
-    why_human: "Server blocks indefinitely on stdio; programmatic subprocess timeout test would require a running process; cannot be verified with static file analysis alone"
+    result: "SATISFIED 2026-05-06 — fresh Claude Code session connected successfully; static analysis confirms sys.stderr.reconfigure line 4 and zero print() calls"
   - test: "Call get_status, search_conversations, get_conversation, export_conversation, get_stats, list_projects via MCP Inspector or claude mcp tool call"
     expected: "All 6 tools return non-error responses; search_conversations returns ranked snippets; export_conversation starts with '# ' title header and '*Date:' line"
-    why_human: "End-to-end MCP JSON-RPC tool dispatch requires the server to be running; ROADMAP SC-6 requires validated 'validated via MCP Inspector, Claude Code can call them against real data'"
+    result: "SATISFIED 2026-05-06 — all 6 tools called live: get_status={status:ok,conversations:106}, list_projects=[], search_conversations=10 BM25-ranked results, get_conversation=JSON turn array, export_conversation=markdown starting '# Open source animal detection...', get_stats={conversations:106,messages:4087,db_size_mb:9.88}"
 ---
 
 # Phase 3: MCP Tools Verification Report
 
 **Phase Goal:** All six MCP tools return correct, well-shaped results and Claude Code can use them against real indexed data
 **Verified:** 2026-05-06
-**Status:** HUMAN_NEEDED
+**Status:** VERIFIED
 **Re-verification:** No — initial verification
 
 ## Goal Achievement

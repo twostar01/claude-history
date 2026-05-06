@@ -1,7 +1,7 @@
 # Claude.ai Export Schema
 
 Discovered from: data-030cd706-d473-447c-a7fe-b6d98e4f1277-1777822473-5f91f1fb-batch-0000.zip
-Discovered at: 2026-05-04T13:59:20Z
+Discovered at: 2026-05-05T03:04:51Z
 Export contains: 11 files
 
 ## ZIP File Structure
