@@ -18,10 +18,10 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-03)
+See: .planning/PROJECT.md (updated 2026-05-06)
 
 **Core value:** Any Claude Code session can search past conversations and retrieve relevant context with a single tool call.
-**Current focus:** COMPLETE — v1.0 milestone achieved
+**Current focus:** v1.0 archived — start /gsd-new-milestone for v2
 
 ## Current Position
 
