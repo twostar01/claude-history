@@ -14,7 +14,7 @@ def _fts_rows(cur: sqlite3.Cursor, fts_query: str) -> list:
         FROM messages_fts
         JOIN messages m ON messages_fts.rowid = m.rowid
         WHERE messages_fts MATCH ?
-        ORDER BY bm25(messages_fts)
+        ORDER BY score
     """, (fts_query,))
     return cur.fetchall()
 
