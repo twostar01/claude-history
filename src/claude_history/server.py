@@ -212,7 +212,7 @@ def main() -> None:
             label = "Human" if msg["role"] == "human" else "Assistant"
             lines.append(f"## {label}")
             lines.append("")
-            lines.append(msg["content"])
+            lines.append(msg["content"] or "")
             lines.append("")
 
         return "\n".join(lines)

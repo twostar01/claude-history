@@ -114,7 +114,7 @@ def search_conversations(
                 """, (conv_id,))
                 msg_rows = cur.fetchall()
                 result["full_content"] = "\n\n".join(
-                    f"{'Human' if r['role'] == 'human' else 'Assistant'}: {r['content']}"
+                    f"{'Human' if r['role'] == 'human' else 'Assistant'}: {r['content'] or ''}"
                     for r in msg_rows
                 )
 
