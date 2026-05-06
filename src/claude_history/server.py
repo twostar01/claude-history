@@ -53,6 +53,14 @@ def main() -> None:
 
         Set include_full_content=True to receive all messages concatenated instead
         of snippets.
+
+        Args:
+            query: FTS5 search query string.
+            project_filter: Accepted for schema compatibility but currently has
+                no effect — all project fields are NULL in the export format.
+                Use list_projects() for context.
+            include_full_content: When True, full message content is returned
+                instead of snippets.
         """
         # project_filter kept in signature for schema compatibility; not applied
         # (all project fields are NULL — see list_projects() for explanation)
