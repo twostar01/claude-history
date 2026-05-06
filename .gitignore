@@ -21,3 +21,6 @@ dist/
 
 # Claude Code local settings — machine-specific
 .claude/
+
+# GSD planning artifacts — internal workflow tooling, not relevant to end-users
+.planning/
