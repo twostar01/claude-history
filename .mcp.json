@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "claude-history": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "--no-sync", "server"],
+      "env": {}
+    }
+  }
+}
