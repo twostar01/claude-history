@@ -141,7 +141,11 @@ def main() -> None:
         finally:
             conn.close()
 
-        db_size_bytes = DB_PATH.stat().st_size
+        try:
+            db_size_bytes = DB_PATH.stat().st_size
+        except FileNotFoundError:
+            db_size_bytes = 0
+
         return {
             "conversations": conv_count,
             "messages": msg_count,
