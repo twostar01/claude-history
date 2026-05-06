@@ -57,7 +57,11 @@ def search_conversations(
         except sqlite3.OperationalError:
             escaped = query.replace('"', '""')
             active_query = f'"{escaped}"'
-            rows = _fts_rows(cur, active_query)
+            try:
+                rows = _fts_rows(cur, active_query)
+            except sqlite3.OperationalError:
+                log.warning("FTS5 query failed after sanitization: %r", query)
+                return []
             log.debug("FTS5 sanitization fallback used for query: %r", query)
 
         # D-06: empty results — return [] not an error
