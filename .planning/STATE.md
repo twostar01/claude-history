@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: "Phase 3 plan 03-02 complete (checkpoint pending human smoke test)"
-last_updated: "2026-05-05"
-last_activity: 2026-05-05
+status: complete
+stopped_at: "Phase 4 plan 04-01 complete — all 4 phases done, v1.0 milestone achieved"
+last_updated: "2026-05-06"
+last_activity: 2026-05-06
 progress:
   total_phases: 4
-  completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
-  percent: 71
+  completed_phases: 4
+  total_plans: 8
+  completed_plans: 8
+  percent: 100
 ---
 
 # Project State
@@ -21,40 +21,44 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-03)
 
 **Core value:** Any Claude Code session can search past conversations and retrieve relevant context with a single tool call.
-**Current focus:** Phase 3 — MCP Tools
+**Current focus:** COMPLETE — v1.0 milestone achieved
 
 ## Current Position
 
-Phase: 3 of 4 (MCP Tools) — EXECUTING
-Plan: 2 of 2 complete (checkpoint pending human smoke test)
-Status: Phase 3 plan 03-02 (server.py 6 tools) implemented; awaiting human checkpoint verification
-Last activity: 2026-05-05
+Phase: 4 of 4 (Integration + README) — COMPLETE
+Plan: 1 of 1 complete
+Status: All phases complete. Server registered in user scope. README published.
+Last activity: 2026-05-06
 
-Progress: [███████░░░] 71% (Phases 1+2 complete, Phase 3 plan 2/2 implemented)
+Progress: [██████████] 100% (All 4 phases complete)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 1
-- Average duration: 1min
-- Total execution time: 1min
+- Total plans completed: 8
+- Average duration: ~2min
+- Total execution time: ~16min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
+| 01-scaffolding-schema-discovery | 3 | ~6min | 2min |
+| 02-database-ingest | 2 | ~4min | 2min |
 | 03-mcp-tools | 2 | 3min | 1.5min |
+| 04-integration-readme | 1 | ~8min | 8min |
 
 **Recent Trend:**
 
-- Last 5 plans: 1min, 2min
+- Last 5 plans: 1min, 2min, 8min
 - Trend: baseline
 
 *Updated after each plan completion*
 | Phase 01-scaffolding-schema-discovery P01 | 3min | 2 tasks | 5 files |
 | Phase 03-mcp-tools P01 | 1min | 1 task | 1 file |
 | Phase 03-mcp-tools P02 | 2min | 1 task | 1 file |
+| Phase 04-integration-readme P01 | 8min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -84,14 +88,17 @@ Recent decisions affecting current work:
 - [03-02]: get_status promoted from Phase 1 stub to return conversations count + last_ingested date
 - [03-02]: project_filter kept in search_conversations signature for schema compatibility (all project fields NULL)
 - [03-02]: list_projects always returns [] — Claude.ai export has no project-conversation association field
+- [04-01]: User-scope registration uses `uv --directory <abs-path> run server` so it works from any Claude Code session directory
+- [04-01]: Project-scope .mcp.json kept on disk (gitignored) for convenience when working inside project dir
+- [04-01]: Added .claude/ to .gitignore (Claude Code local settings, machine-specific)
 
 ### Pending Todos
 
-None yet.
+None.
 
 ### Blockers/Concerns
 
-None — FTS5 schema finalized in Phase 2, project association (NULL) confirmed. search.py complete. Ready for server.py tool wiring (03-02).
+None — v1.0 milestone complete.
 
 ## Deferred Items
 
@@ -104,6 +111,6 @@ None — FTS5 schema finalized in Phase 2, project association (NULL) confirmed.
 
 ## Session Continuity
 
-Last session: 2026-05-05
-Stopped at: Phase 3 plan 03-02 — server.py 6 tools committed (a42e796); awaiting human checkpoint smoke test
-Resume file: .planning/phases/04-integration-readme/04-01-PLAN.md (after checkpoint approved)
+Last session: 2026-05-06
+Stopped at: Phase 4 plan 04-01 — README + user-scope registration complete (3150a70, 87d992e). v1.0 milestone achieved.
+Resume file: None — project complete. Run /gsd-complete-milestone to close v1.0.

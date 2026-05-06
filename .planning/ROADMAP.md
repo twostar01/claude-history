@@ -14,8 +14,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Scaffolding + Schema Discovery** - uv project, stdio server stub, stderr logging, MCP registration working with stub tools, schema_discovery.py prints real export structure *(completed 2026-05-04)*
 - [x] **Phase 2: Database + Ingest** - FTS5 schema locked, ingest.py parses real export, dedup + incremental, text attachment indexing, WAL mode *(completed 2026-05-05)*
-- [ ] **Phase 3: MCP Tools** - All 6 tools implemented, validated via MCP Inspector, Claude Code can call them against real data
-- [ ] **Phase 4: Integration + README** - End-to-end test with full history, claude mcp add registration confirmed, README complete
+- [x] **Phase 3: MCP Tools** - All 6 tools implemented, validated via MCP Inspector, Claude Code can call them against real data *(completed 2026-05-05)*
+- [x] **Phase 4: Integration + README** - End-to-end test with full history, claude mcp add registration confirmed, README complete *(completed 2026-05-06)*
 
 ## Phase Details
 
@@ -79,7 +79,7 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 04-01: End-to-end integration test with full history + README authoring (installation, ingest workflow, registration command, tool usage examples)
+- [x] 04-01-PLAN: User-scope MCP registration (`uv --directory` flag) + README with installation, ingest workflow, registration command, all 6 tool signatures *(completed 2026-05-06)*
 
 ## Progress
 
@@ -90,5 +90,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 |-------|----------------|--------|-----------|
 | 1. Scaffolding + Schema Discovery | 3/3 | Complete | 2026-05-04 |
 | 2. Database + Ingest | 2/2 | Complete | 2026-05-05 |
-| 3. MCP Tools | 2/2 | Complete (checkpoint pending) | 2026-05-05 |
-| 4. Integration + README | 0/1 | Not started | - |
+| 3. MCP Tools | 2/2 | Complete | 2026-05-05 |
+| 4. Integration + README | 1/1 | Complete | 2026-05-06 |

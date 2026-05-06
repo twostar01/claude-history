@@ -22,20 +22,20 @@
 
 ### MCP Tools
 
-- [ ] **TOOL-01**: `search_conversations(query, project_filter?)` returns matching conversations with BM25-ranked snippets, title, project, date, and match count
-- [ ] **TOOL-02**: `search_conversations` accepts `include_full_content=true` flag to return complete message text instead of snippets
-- [ ] **TOOL-03**: `get_conversation(id)` returns full conversation content formatted as labeled turns (Human/Assistant)
-- [ ] **TOOL-04**: `list_projects()` returns all project names with conversation counts and date ranges
-- [ ] **TOOL-05**: `get_stats()` returns total conversation count, total message count, date range of indexed data, and database file size
-- [ ] **TOOL-06**: `export_conversation(id, format?)` returns the conversation formatted as a markdown string suitable for pasting or summarizing
+- [x] **TOOL-01**: `search_conversations(query, project_filter?)` returns matching conversations with BM25-ranked snippets, title, project, date, and match count — **Validated in Phase 3**
+- [x] **TOOL-02**: `search_conversations` accepts `include_full_content=true` flag to return complete message text instead of snippets — **Validated in Phase 3**
+- [x] **TOOL-03**: `get_conversation(id)` returns full conversation content formatted as labeled turns (Human/Assistant) — **Validated in Phase 3**
+- [x] **TOOL-04**: `list_projects()` returns all project names with conversation counts and date ranges — **Validated in Phase 3** (always [] — export format limitation)
+- [x] **TOOL-05**: `get_stats()` returns total conversation count, total message count, date range of indexed data, and database file size — **Validated in Phase 3**
+- [x] **TOOL-06**: `export_conversation(id, format?)` returns the conversation formatted as a markdown string suitable for pasting or summarizing — **Validated in Phase 3**
 
 ### Server & Integration
 
 - [x] **SETUP-01**: Project is structured as a uv package with `pyproject.toml`, entry points for `server` and `ingest` commands
-- [ ] **SETUP-02**: Server uses FastMCP with stdio transport; all logging goes to stderr; stdout is never written to directly
-- [ ] **SETUP-03**: MCP server is registered with Claude Code via `claude mcp add --scope user --transport stdio` so it is available in every session
+- [x] **SETUP-02**: Server uses FastMCP with stdio transport; all logging goes to stderr; stdout is never written to directly — **Validated in Phase 3**
+- [x] **SETUP-03**: MCP server is registered with Claude Code via `claude mcp add -s user` so it is available in every session — **Validated in Phase 4**
 - [x] **SETUP-04**: `.gitignore` excludes the SQLite database file and any Claude.ai export ZIPs (contain personal conversation history)
-- [ ] **SETUP-05**: README documents installation steps, ingest workflow, and Claude Code registration command
+- [x] **SETUP-05**: README documents installation steps, ingest workflow, and Claude Code registration command — **Validated in Phase 4**
 
 ## v2 Requirements
 
@@ -77,17 +77,17 @@
 | DB-02 | Phase 2 | Complete |
 | DB-03 | Phase 2 | Complete |
 | DB-04 | Phase 2 | Complete |
-| TOOL-01 | Phase 3 | Pending |
-| TOOL-02 | Phase 3 | Pending |
-| TOOL-03 | Phase 3 | Pending |
-| TOOL-04 | Phase 3 | Pending |
-| TOOL-05 | Phase 3 | Pending |
-| TOOL-06 | Phase 3 | Pending |
+| TOOL-01 | Phase 3 | Complete |
+| TOOL-02 | Phase 3 | Complete |
+| TOOL-03 | Phase 3 | Complete |
+| TOOL-04 | Phase 3 | Complete |
+| TOOL-05 | Phase 3 | Complete |
+| TOOL-06 | Phase 3 | Complete |
 | SETUP-01 | Phase 1 | Complete |
-| SETUP-02 | Phase 3 | Pending |
-| SETUP-03 | Phase 4 | Pending |
+| SETUP-02 | Phase 3 | Complete |
+| SETUP-03 | Phase 4 | Complete |
 | SETUP-04 | Phase 1 | Complete |
-| SETUP-05 | Phase 4 | Pending |
+| SETUP-05 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 20 total
@@ -96,4 +96,4 @@
 
 ---
 *Requirements defined: 2026-05-03*
-*Last updated: 2026-05-05 — Phase 2 requirements marked complete; stale mechanism descriptions corrected (trigram→unicode61, BEFORE→AFTER triggers, INSERT OR REPLACE→INSERT OR IGNORE)*
+*Last updated: 2026-05-06 — All v1 requirements complete; Phase 3+4 requirements validated*
