@@ -1,12 +1,14 @@
 """FTS5 search logic for the claude-history MCP server."""
 
 import logging
+import re
 import sqlite3
 from claude_history.config import DB_PATH
 from claude_history.db import init_db
 
 log = logging.getLogger(__name__)
 
+_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 def _fts_rows(cur: sqlite3.Cursor, fts_query: str, role: str | None = None) -> list:
     sql = """
@@ -101,6 +103,11 @@ def search_conversations(
     if role_filter is not None and role_filter not in VALID_ROLES:
         return []  # reject fast -- documented contract
 
+
+    for _name, _val in [("date_from", date_from), ("date_to", date_to)]:
+        if _val is not None and not _DATE_RE.match(_val):
+            log.warning("Invalid date format for %s: %r (expected YYYY-MM-DD)", _name, _val)
+            return []
     conn = init_db(DB_PATH)
     try:
         conn.row_factory = sqlite3.Row
