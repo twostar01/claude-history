@@ -93,8 +93,9 @@ def main() -> None:
 
         Returns {"error": "..."} when the conversation ID is not found.
         """
-        conn = init_db(DB_PATH)
+        conn = None
         try:
+            conn = init_db(DB_PATH)
             conn.row_factory = sqlite3.Row
             cur = conn.cursor()
             cur.execute(
@@ -114,7 +115,8 @@ def main() -> None:
             """, (id,))
             messages = cur.fetchall()
         finally:
-            conn.close()
+            if conn is not None:
+                conn.close()
 
         role_label = {"human": "Human", "assistant": "Assistant"}
         turns = [
@@ -151,8 +153,9 @@ def main() -> None:
     @mcp.tool()
     def get_stats() -> dict:
         """Return database statistics: conversation count, message count, date range, file size."""
-        conn = init_db(DB_PATH)
+        conn = None
         try:
+            conn = init_db(DB_PATH)
             conn.row_factory = sqlite3.Row
             cur = conn.cursor()
             cur.execute("SELECT COUNT(*) AS n FROM conversations")
@@ -164,7 +167,8 @@ def main() -> None:
             )
             dates = cur.fetchone()
         finally:
-            conn.close()
+            if conn is not None:
+                conn.close()
 
         try:
             db_size_bytes = DB_PATH.stat().st_size
@@ -202,8 +206,9 @@ def main() -> None:
         Parent directories are created recursively if they do not exist. Existing
         files at that path are overwritten silently.
         """
-        conn = init_db(DB_PATH)
+        conn = None
         try:
+            conn = init_db(DB_PATH)
             conn.row_factory = sqlite3.Row
             cur = conn.cursor()
             cur.execute(
@@ -221,7 +226,8 @@ def main() -> None:
             """, (id,))
             messages = cur.fetchall()
         finally:
-            conn.close()
+            if conn is not None:
+                conn.close()
 
         # D-09: compact metadata header (title + date only — no UUID, no message count)
         lines: list[str] = [

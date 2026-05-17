@@ -108,8 +108,9 @@ def search_conversations(
         if _val is not None and not _DATE_RE.match(_val):
             log.warning("Invalid date format for %s: %r (expected YYYY-MM-DD)", _name, _val)
             return []
-    conn = init_db(DB_PATH)
+    conn = None
     try:
+        conn = init_db(DB_PATH)
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
 
@@ -203,4 +204,5 @@ def search_conversations(
         return results
 
     finally:
-        conn.close()
+        if conn is not None:
+            conn.close()
