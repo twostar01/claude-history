@@ -92,6 +92,10 @@ def search_conversations(
             filters to assistant messages. None (default) applies no role filter.
             Malformed values return [] without raising an error.
     """
+    VALID_ROLES = {"human", "assistant"}
+    if role_filter is not None and role_filter not in VALID_ROLES:
+        return []  # reject fast -- documented contract
+
     conn = init_db(DB_PATH)
     try:
         conn.row_factory = sqlite3.Row
