@@ -87,6 +87,11 @@ def search_conversations(
         date_to: Optional ISO date string (YYYY-MM-DD). When provided, only
             conversations started on or before this date are returned. None
             (default) applies no upper bound.
+            Note: both date_from and date_to filter on the conversation's
+            created_at, not on the individual matching message's timestamp.
+            When combined with role_filter, the date check applies to when
+            the conversation started, regardless of when the matching message
+            was created.
         role_filter: Optional role filter. "human" returns only conversations
             where a human message matched the query; "assistant" similarly
             filters to assistant messages. None (default) applies no role filter.
