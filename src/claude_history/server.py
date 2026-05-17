@@ -39,6 +39,9 @@ def main() -> None:
         query: str,
         project_filter: str | None = None,
         include_full_content: bool = False,
+        date_from: str | None = None,
+        date_to: str | None = None,
+        role_filter: str | None = None,
     ) -> list[dict]:
         """Search indexed conversations using FTS5 BM25 ranking.
 
@@ -61,10 +64,24 @@ def main() -> None:
                 Use list_projects() for context.
             include_full_content: When True, full message content is returned
                 instead of snippets.
+            date_from: Optional ISO date string (YYYY-MM-DD). When provided, only
+                conversations started on or after this date are returned.
+            date_to: Optional ISO date string (YYYY-MM-DD). When provided, only
+                conversations started on or before this date are returned.
+            role_filter: Optional role filter. "human" returns only conversations
+                where a human message matched the query; "assistant" similarly
+                filters to assistant messages. None (default) applies no role filter.
         """
         # project_filter kept in signature for schema compatibility; not applied
         # (all project fields are NULL — see list_projects() for explanation)
-        return _search(query, limit=10, include_full_content=include_full_content)
+        return _search(
+            query,
+            limit=10,
+            include_full_content=include_full_content,
+            date_from=date_from,
+            date_to=date_to,
+            role_filter=role_filter,
+        )
 
     # ── Tool: get_conversation ───────────────────────────────────────────────
     @mcp.tool()
@@ -164,7 +181,7 @@ def main() -> None:
 
     # ── Tool: export_conversation ────────────────────────────────────────────
     @mcp.tool()
-    def export_conversation(id: str) -> str:
+    def export_conversation(id: str, file_path: str | None = None) -> str:
         """Return conversation as a clean markdown string suitable for pasting or summarizing.
 
         Format:
@@ -179,6 +196,11 @@ def main() -> None:
           ...
 
         No per-message timestamps (D-10). Returns an error string when ID not found.
+
+        When file_path is provided, the markdown is written to that path and the
+        tool returns "Written to: <absolute_path>" instead of the markdown string.
+        Parent directories are created recursively if they do not exist. Existing
+        files at that path are overwritten silently.
         """
         conn = init_db(DB_PATH)
         try:
@@ -215,7 +237,15 @@ def main() -> None:
             lines.append(msg["content"] or "")
             lines.append("")
 
-        return "\n".join(lines)
+        markdown = "\n".join(lines)
+
+        if file_path is not None:
+            output_path = Path(file_path)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            output_path.write_text(markdown, encoding="utf-8")
+            return f"Written to: {output_path.resolve()}"
+
+        return markdown
 
     # ── Tool: get_status ─────────────────────────────────────────────────────
     @mcp.tool()
