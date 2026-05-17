@@ -240,10 +240,10 @@ def main() -> None:
         markdown = "\n".join(lines)
 
         if file_path is not None:
-            output_path = Path(file_path)
+            output_path = Path(file_path).resolve()
             output_path.parent.mkdir(parents=True, exist_ok=True)
             output_path.write_text(markdown, encoding="utf-8")
-            return f"Written to: {output_path.resolve()}"
+            return f"Written to: {output_path}"
 
         return markdown
 
