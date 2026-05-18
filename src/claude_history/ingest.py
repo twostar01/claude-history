@@ -115,6 +115,14 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                     log.error("conversations.json is not valid JSON: %s", exc)
                     sys.exit(1)
 
+        if not isinstance(conversations, list):
+            log.error(
+                "conversations.json must be a JSON array, got %s. "
+                "Is this a Claude.ai export ZIP?",
+                type(conversations).__name__,
+            )
+            sys.exit(1)
+
         log.info("%d conversations found in ZIP", len(conversations))
 
         for conv in conversations:
