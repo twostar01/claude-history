@@ -8,8 +8,9 @@ Usage:
 The ZIP must contain conversations.json. Other top-level members
 (projects/, design_chats/, users.json) are silently skipped.
 
-Idempotent: safe to re-run on the same ZIP. Existing conversations are
-skipped; new conversations are appended.
+Incremental: safe to re-run on an updated ZIP. New messages in existing
+conversations are appended; duplicate messages are silently skipped via
+INSERT OR IGNORE. New conversations are inserted in full.
 """
 
 import argparse
@@ -72,8 +73,12 @@ def normalize_ts(ts: str) -> str:
 def ingest_zip(zip_path: Path, db_path: Path) -> None:
     """Parse a Claude.ai export ZIP and upsert conversations + messages.
 
-    Incremental behavior: conversations already in the DB are skipped
-    entirely (UUID-based check). Only new conversations are inserted.
+    Incremental behavior: ALL conversations in the ZIP are scanned regardless
+    of whether they already exist in the DB. INSERT OR IGNORE on individual
+    messages handles deduplication — existing messages are silently skipped,
+    new messages are appended. After processing each conversation, if any new
+    messages were inserted, message_count and updated_at are updated on the
+    conversations row.
 
     Uses INSERT OR IGNORE throughout — history records are immutable.
     INSERT OR REPLACE is explicitly avoided because it changes the rowid,
@@ -89,7 +94,9 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
 
         new_convs = 0
         skipped_convs = 0
-        new_msgs = 0
+        updated_convs = 0
+        unchanged_convs = 0
+        total_new_msgs = 0
         attachment_msgs = 0
 
         with zipfile.ZipFile(zip_path) as zf:
@@ -117,19 +124,11 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                 skipped_convs += 1
                 continue
 
-            # Incremental skip: if conversation already indexed, skip all its messages.
-            # UUID uniqueness is guaranteed by the Claude.ai export format.
-            cur.execute("SELECT 1 FROM conversations WHERE id = ?", (uuid,))
-            if cur.fetchone():
-                skipped_convs += 1
-                continue
-
             msgs = conv.get("chat_messages", [])
             title = conv.get("name") or ""
 
-            # INSERT OR IGNORE: if a race condition inserted this UUID between the
-            # SELECT above and here, the IGNORE prevents a duplicate. rowcount==0
-            # when the IGNORE fires — count it as skipped rather than new.
+            # INSERT OR IGNORE: no-op when UUID already exists; rowcount==0 means
+            # existing conversation, rowcount==1 means newly inserted.
             cur.execute(
                 """INSERT OR IGNORE INTO conversations
                    (id, title, project, created_at, updated_at, message_count)
@@ -142,10 +141,13 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                     len(msgs),
                 ),
             )
-            if cur.rowcount:
+            is_new_conv = bool(cur.rowcount)
+            if is_new_conv:
                 new_convs += 1
             else:
-                skipped_convs += 1  # race-condition duplicate
+                skipped_convs += 1  # race-condition duplicate or existing conversation
+
+            conv_new_msgs = 0
 
             for position, msg in enumerate(msgs):
                 msg_uuid = msg.get("uuid")
@@ -172,24 +174,42 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                     ),
                 )
                 if cur.rowcount:
-                    new_msgs += 1
+                    conv_new_msgs += 1
+                    total_new_msgs += 1
                 if has_attachment:
                     attachment_msgs += 1
+
+            # Update message_count and updated_at if new messages were appended to an
+            # existing conversation. New conversations already have the correct initial counts.
+            if conv_new_msgs > 0 and not is_new_conv:
+                cur.execute(
+                    """UPDATE conversations
+                       SET message_count = message_count + ?,
+                           updated_at = ?
+                       WHERE id = ?""",
+                    (
+                        conv_new_msgs,
+                        normalize_ts(conv.get("updated_at", "")),
+                        uuid,
+                    ),
+                )
+                updated_convs += 1
+            elif not is_new_conv and conv_new_msgs == 0:
+                unchanged_convs += 1
 
         conn.commit()
     finally:
         conn.close()
 
+    log.info("%d new conversations", new_convs)
     log.info(
-        "%d new conversations, %d already indexed (skipped)",
-        new_convs,
-        skipped_convs,
+        "%d existing conversations updated (%d new messages)",
+        updated_convs,
+        total_new_msgs,
     )
-    log.info(
-        "indexed %d messages (%d with attachment content)",
-        new_msgs,
-        attachment_msgs,
-    )
+    log.info("%d conversations unchanged", unchanged_convs)
+    if attachment_msgs:
+        log.info("%d messages had attachment content", attachment_msgs)
 
 
 def main() -> None:
