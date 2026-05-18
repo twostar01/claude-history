@@ -186,8 +186,17 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                     if has_attachment:
                         attachment_msgs += 1
 
+            # Correct message_count for new conversations when some messages were
+            # skipped due to missing UUIDs — len(msgs) was stored at INSERT time
+            # but fewer rows were actually inserted.
+            if is_new_conv and conv_new_msgs != len(msgs):
+                cur.execute(
+                    "UPDATE conversations SET message_count = ? WHERE id = ?",
+                    (conv_new_msgs, uuid),
+                )
+
             # Update message_count and updated_at if new messages were appended to an
-            # existing conversation. New conversations already have the correct initial counts.
+            # existing conversation.
             if conv_new_msgs > 0 and not is_new_conv:
                 cur.execute(
                     """UPDATE conversations
