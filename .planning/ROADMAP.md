@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 MVP** — Phases 1–4 (shipped 2026-05-06)
-- 🚧 **v1.1 Search & Ingest Improvements** — Phases 5–6 (in progress)
+- ✅ **v1.1 Search & Ingest Improvements** — Phases 5–6 (shipped 2026-05-18)
 
 ## Phases
 
@@ -19,12 +19,12 @@ See [v1.0 Roadmap Archive](milestones/v1.0-ROADMAP.md) for full phase details.
 
 </details>
 
-### 🚧 v1.1 Search & Ingest Improvements (In Progress)
+### ✅ v1.1 Search & Ingest Improvements (Shipped 2026-05-18)
 
 **Milestone Goal:** Fill the gaps left by v1.0 — richer search filtering, correct incremental ingest, file export, and PDF attachment support.
 
 - [x] **Phase 5: Search Filters + Export** - Add date/role filters to search_conversations and file-write capability to export_conversation — completed 2026-05-16
-- [ ] **Phase 6: Ingest Improvements** - Incremental message append for existing conversations and PDF attachment text indexing
+- [x] **Phase 6: Ingest Improvements** - Incremental message append for existing conversations (INGEST-01) — completed 2026-05-18
 
 ## Phase Details
 
@@ -52,7 +52,7 @@ Plans:
   4. User ingests a ZIP with no PDFs — ingest completes without error (pypdf/pdfplumber absent or PDF-free ZIP handled gracefully)
 **Plans**: 1 plan
 Plans:
-- [ ] 06-01-PLAN.md — Fix incremental skip bug in ingest_zip(): append new messages to existing conversations (INGEST-01)
+- [x] 06-01-PLAN.md — Fix incremental skip bug in ingest_zip(): append new messages to existing conversations (INGEST-01)
 
 ## Progress
 
@@ -63,4 +63,4 @@ Plans:
 | 3. MCP Tools                      | v1.0 | 2/2 | Complete | 2026-05-05 |
 | 4. Integration + README           | v1.0 | 1/1 | Complete | 2026-05-06 |
 | 5. Search Filters + Export        | v1.1 | 1/1 | Complete | 2026-05-16 |
-| 6. Ingest Improvements            | v1.1 | 0/1 | Not started | - |
+| 6. Ingest Improvements            | v1.1 | 1/1 | Complete | 2026-05-18 |
