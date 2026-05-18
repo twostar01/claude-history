@@ -175,7 +175,6 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                 )
                 if cur.rowcount:
                     conv_new_msgs += 1
-                    total_new_msgs += 1
                 if has_attachment:
                     attachment_msgs += 1
 
@@ -194,6 +193,7 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                     ),
                 )
                 updated_convs += 1
+                total_new_msgs += conv_new_msgs
             elif not is_new_conv and conv_new_msgs == 0:
                 unchanged_convs += 1
 
