@@ -77,6 +77,30 @@ Use these entry points:
 Do not make direct repo edits outside a GSD workflow unless the user explicitly asks to bypass it.
 <!-- GSD:workflow-end -->
 
+## Release Process
+
+**Live UAT is required before marking any milestone complete.** Do not skip it — automated tests and verifiers cannot catch stdio transport issues, FTS5 schema mismatches, or MCP tool registration problems.
+
+### Steps
+
+1. Export fresh history from Claude.ai (Settings → Data & Privacy → Export Data → JSON)
+2. Run ingest: `uv run ingest <export.zip>` — confirm output shows expected conversation/message counts
+3. Restart Claude Code to let it re-spawn the MCP server process
+4. Open the milestone's UAT checklist (`.planning/<milestone>-UAT.md`) and run every test live in a Claude Code session
+5. Every test must show `result: pass` before the milestone is tagged complete
+
+### UAT Checklist Files
+
+Per-milestone checklists: `.planning/<milestone>-UAT.md` (e.g., `.planning/v1.1-UAT.md`)
+
+Each test entry has `expected:`, `result:` (pass/fail/skip), and optional `note:` fields.
+
+### Why Live UAT Matters Here
+
+- The MCP server runs over **stdio** — transport contamination (any `print()` to stdout) silently kills the session and only shows up at runtime
+- FTS5 tokenizer options are locked at schema creation and can't be changed without a full DB rebuild — schema problems surface during ingest or first query
+- MCP tool registration (`~/.claude.json`) can drift if paths change — registration failures only appear when Claude Code tries to spawn the server
+
 <!-- GSD:profile-start -->
 ## Developer Profile
 

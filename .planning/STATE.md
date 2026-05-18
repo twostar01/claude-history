@@ -75,6 +75,11 @@ None.
 
 None.
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+
 ## Deferred Items
 
 | Category | Item | Status | Deferred At |
