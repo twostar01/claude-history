@@ -175,8 +175,8 @@ def ingest_zip(zip_path: Path, db_path: Path) -> None:
                 )
                 if cur.rowcount:
                     conv_new_msgs += 1
-                if has_attachment:
-                    attachment_msgs += 1
+                    if has_attachment:
+                        attachment_msgs += 1
 
             # Update message_count and updated_at if new messages were appended to an
             # existing conversation. New conversations already have the correct initial counts.
