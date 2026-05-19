@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-16)
 Phase: 6 of 6 (Ingest Improvements) — COMPLETE
 Plan: 06-01 — COMPLETE (2/2 plans done)
 Status: All phases complete — v1.1 milestone achieved
-Last activity: 2026-05-18 — 06-01 executed; INGEST-01 implemented and smoke-tested
+Last activity: 2026-05-18 — Completed quick task 260518-q01: Document live UAT as required before shipping
 
 Progress: [██████████] 100%
 
@@ -79,6 +79,7 @@ None.
 
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
+| 260518-q01 | Document live UAT as a required step before shipping | 2026-05-18 | b44b012 | [260518-q01-document-live-uat-shipping](./quick/260518-q01-document-live-uat-shipping/) |
 
 ## Deferred Items
 
