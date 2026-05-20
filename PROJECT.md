@@ -2,7 +2,7 @@
 title: Claude History MCP Server
 type: software
 status: working
-wp_page_id: 231
+wp_page_id: 237
 github_url: https://github.com/twostar01/claude-history
 ---
 
