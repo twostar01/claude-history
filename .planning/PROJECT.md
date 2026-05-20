@@ -103,4 +103,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-05-18 — v1.1 milestone shipped*
+*Last updated: 2026-05-20 — v1.1 milestone archived*

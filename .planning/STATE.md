@@ -1,34 +1,33 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: Search & Ingest Improvements
-status: complete
-stopped_at: "Phase 6 complete — INGEST-01 implemented; incremental ingest verified"
-last_updated: "2026-05-18"
-last_activity: 2026-05-18
+milestone: v1.2
+milestone_name: (not yet defined)
+status: planning
+stopped_at: "v1.1 archived 2026-05-20 — start /gsd-new-milestone for v1.2"
+last_updated: "2026-05-20"
+last_activity: 2026-05-20
 progress:
-  total_phases: 2
-  completed_phases: 2
-  total_plans: 2
-  completed_plans: 2
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-16)
+See: .planning/PROJECT.md (updated 2026-05-20)
 
 **Core value:** Any Claude Code session can search past conversations and retrieve relevant context with a single tool call.
-**Current focus:** Phase 6 — Ingest Improvements
+**Current focus:** Planning v1.2 — run `/gsd-new-milestone` to define next milestone
 
 ## Current Position
 
-Phase: 6 of 6 (Ingest Improvements) — COMPLETE
-Plan: 06-01 — COMPLETE (2/2 plans done)
-Status: All phases complete — v1.1 milestone achieved
-Last activity: 2026-05-18 — Completed quick task 260518-q01: Document live UAT as required before shipping
+Phase: — (between milestones)
+Status: v1.1 archived 2026-05-20. Ready to plan v1.2.
+Last activity: 2026-05-20 — v1.1 milestone archived and tagged
 
 Progress: [██████████] 100%
 
@@ -89,6 +88,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-05-18
-Stopped at: Phase 6 complete — 06-01 executed; INGEST-01 verified PASSED; v1.1 milestone done
-Resume file: None — all phases complete
+Last session: 2026-05-20
+Stopped at: v1.1 archived — milestones/v1.1-ROADMAP.md + v1.1-REQUIREMENTS.md created, tagged v1.1
+Resume file: None — run `/gsd-new-milestone` to begin v1.2
